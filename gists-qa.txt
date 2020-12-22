@@ -1,0 +1,56 @@
+Created using:  Cucumber and Java
+
+
+package cucumber.selenium.selenium;
+
+    import java.net.MalformedURLException;
+    import java.util.concurrent.TimeUnit;
+
+    import org.openqa.selenium.chrome.ChromeDriver;
+    import org.openqa.selenium.By;
+    import org.openqa.selenium.WebDriver;
+    import org.openqa.selenium.support.ui.ExpectedConditions;
+    import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class seleniumFunction {
+
+        public static WebDriver driver=null;
+        public static WebDriverWait waitVar=null;
+
+        public static String baseURL="https://gist.github.com/FaliaAmalia";
+
+        public void createDriver() throws MalformedURLException,InterruptedException{
+            System.setProperty("webDriver.chrome.driver","/home/FaliaAmalia/chromedriver");
+            driver =  new ChromeDriver();
+
+            driver.manage().window().maximize();
+            driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+
+            driver.get(baseURL);
+
+            waitVar = new WebDriverWait(driver,15);
+        }
+		 public void tearDown(){
+            driver.quit();
+        }
+		
+		public void inGistFalia (){
+		driver.findElement(By.name("FaliaAmalia")).isDisplayed();
+		}
+		
+		public void clickAdd (){
+		driver.findElement(By.cssSelector("svg.octicon.octicon-plus > path")).click();
+		driver.findElement(By.name("All gists")).isDisplayed();
+		}
+		
+		public void addPublic (){
+		driver.findElement(By.name("gist[contents][][name]")).clear();
+		driver.findElement(By.name("gist[contents][][name]")).sendKeys("Gist2");
+		driver.findElement(By.name("gist[contents][][value]")).sendKeys("test description")
+		driver.findElement(By.name("gist[public]")).click();
+		}
+		
+		public void clickDetailGist(){
+		driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='FaliaAmalia'])[3]/following::strong[1]")).click();
+		}
+}
